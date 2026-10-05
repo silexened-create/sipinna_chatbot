@@ -1,0 +1,235 @@
+/* ==============================================
+   styles.css — Styles for Darfi chatbot
+   Mobile-safe layout with dvh + JS fallback
+   ============================================== */
+
+/* Reset and base */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Dynamic viewport height — set by JS as a fallback for older browsers */
+  --vh: 1vh;
+}
+
+html {
+  height: 100%;
+  /* Prevent iOS rubber-banding from breaking the layout */
+  overflow: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  /* Modern browsers: use dvh.  Fallback: use the JS custom property. */
+  height: 100vh; /* fallback for very old browsers */
+  height: calc(var(--vh, 1vh) * 100);
+  height: 100dvh;
+  overflow: hidden;
+  /* iOS safe-area padding (notch / home indicator) */
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Header */
+header {
+  background: #2c6e49;
+  color: #fff;
+  padding: 0.75rem 1rem;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+header h1 {
+  font-size: 1.4rem;
+}
+
+header p {
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+  opacity: 0.85;
+}
+
+/* Main layout — fills all remaining vertical space */
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.75rem;
+  max-width: 700px;
+  margin: 0 auto;
+  width: 100%;
+  /* Prevent main from overflowing when the keyboard opens */
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Darfi avatar placeholder */
+.darfi-avatar {
+  width: 100px;
+  height: 100px;
+  background: #ddd;
+  border-radius: 50%;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  color: #999;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+/* Animation class — added/removed via JS when Darfi "speaks" */
+.darfi-avatar.speaking {
+  transform: scale(1.1);
+}
+
+/* Chat container — grows to fill available space, scrolls internally */
+.chat-container {
+  width: 100%;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* smooth scroll on older iOS */
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  min-height: 0; /* allow flex shrinking */
+}
+
+/* Individual messages */
+.chat-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.message {
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  max-width: 85%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.message.user {
+  background: #d4edda;
+  align-self: flex-end;
+}
+
+.message.darfi {
+  background: #e8e8e8;
+  align-self: flex-start;
+}
+
+/* Input area — always visible at the bottom */
+.input-area {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+  flex-shrink: 0;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+#user-input {
+  flex: 1;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  /* Prevent iOS zoom on focus */
+  font-size: 16px;
+}
+
+#btn-send,
+#btn-voice {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  /* Prevent text selection on double-tap */
+  -webkit-user-select: none;
+  user-select: none;
+  /* Remove tap highlight on mobile */
+  -webkit-tap-highlight-color: transparent;
+}
+
+#btn-send {
+  background: #2c6e49;
+  color: #fff;
+}
+
+#btn-voice {
+  background: #e0a800;
+  color: #fff;
+}
+
+#btn-voice.listening {
+  background: #c0392b;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 0.5rem;
+  font-size: 0.75rem;
+  color: #777;
+  border-top: 1px solid #ddd;
+  flex-shrink: 0;
+}
+
+/* =========================================
+   Mobile adjustments
+   ========================================= */
+@media (max-width: 600px) {
+  header {
+    padding: 0.5rem 0.75rem;
+  }
+
+  header h1 {
+    font-size: 1.15rem;
+  }
+
+  header p {
+    font-size: 0.8rem;
+  }
+
+  main {
+    padding: 0.5rem;
+  }
+
+  .darfi-avatar {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 0.4rem;
+  }
+
+  .chat-container {
+    padding: 0.5rem;
+    margin-bottom: 0.4rem;
+    border-radius: 6px;
+  }
+
+  #btn-send,
+  #btn-voice {
+    padding: 0.5rem 0.6rem;
+    font-size: 0.9rem;
+  }
+
+  footer {
+    padding: 0.35rem;
+    font-size: 0.7rem;
+  }
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Darfi - Asistente virtual de SIPINNA sobre derechos de niñas, niños y adolescentes">
+  <title>Darfi - Asistente de SIPINNA</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header>
+    <h1>Darfi - Asistente de SIPINNA</h1>
+    <p>Pregúntame sobre los derechos de niñas, niños y adolescentes</p>
+  </header>
+
+  <main>
+    <!-- Container for Darfi's image or animation -->
+    <div id="darfi-avatar" class="darfi-avatar">
+      <!-- Aquí se colocará la imagen o animación de Darfi -->
+    </div>
+
+    <!-- Chat container -->
+    <div id="chat-container" class="chat-container">
+      <div id="chat-messages" class="chat-messages">
+        <!-- Messages will be appended here dynamically -->
+      </div>
+    </div>
+
+    <!-- Input area -->
+    <div class="input-area">
+      <input
+        type="text"
+        id="user-input"
+        placeholder="Escribe tu pregunta aquí..."
+        autocomplete="off"
+      />
+      <button id="btn-send">Enviar</button>
+      <button id="btn-voice">🎤 Hablar</button>
+    </div>
+  </main>
+
+  <footer>
+    <p>SIPINNA &mdash; Sistema de Protección Integral de Niñas, Niños y Adolescentes</p>
+  </footer>
+
+  <script src="rag/sipinna_rag.js"></script>
+  <script src="moderation/filters.js"></script>
+  <script src="chat.js"></script>
+</body>
+</html>
